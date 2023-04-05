@@ -11,8 +11,8 @@ export class DealRequestsService extends RequestService {
     super(http)
     this.endPointUrl = "https://my-json-server.typicode.com/mabukoush1/contacts/db"
   }
-  override get all(): Observable<IDeal[]> {
-    return super.all.pipe(map((value: any) => value.deals))
+  override get getAll(): Observable<IDeal[]> {
+    return super.getAll.pipe(map((value: any) => value.deals as IDeal[]))
   }
   override update(id: number, updatedRow: DealProperty) {
     return super.update(id, updatedRow)

@@ -1,6 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { BadInput } from '../Error/badinput.error';
+import { CrmError } from '../Error/crm.error';
+import { NotFound } from '../Error/notfound.error';
+/** 
+ * A generic service to handle HTTP requests.
+*/
 
 @Injectable({
   providedIn: 'root'
@@ -10,35 +16,46 @@ export class RequestService {
 
   constructor(private http: HttpClient) { }
 
-  get all(): Observable<any> {
-    return this.http.get(this.endPointUrl)
+  get getAll(): Observable<unknown> {
+    return this.http.get(this.endPointUrl).pipe(
+      catchError(this.handleError))
   }
 
-  get(id: number): Observable<any> {
+  getOne(id: number): Observable<unknown> {
     return this.http.get(this.endPointUrl + '/' + id).pipe(
-      map(resbonce => resbonce),
-      catchError(this.handleError)
-    )
+      catchError(this.handleError))
   }
-  create(row: any): Observable<any> {
-    return this.http.post(this.endPointUrl, JSON.stringify(row))
-  }
-
-  update(id: number, updatedRow: any): Observable<any> {
-    return this.http.patch(this.endPointUrl + '/' + id, JSON.stringify(updatedRow))
+  create(row: any): Observable<unknown> {
+    return this.http.post(this.endPointUrl, row).pipe(
+      catchError(this.handleError))
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(this.endPointUrl + '/' + id)
+  update(id: number, updatedRow: any): Observable<unknown> {
+    return this.http.patch(this.endPointUrl + '/' + id, updatedRow).pipe(
+      catchError(this.handleError))
   }
 
-  private handleError(error: Response) {
+  delete(id: number): Observable<unknown> {
+    return this.http.delete(this.endPointUrl + '/' + id).pipe(
+      catchError(this.handleError))
+  }
+  /**
+   * Handles HTTP errors returned by the API and maps them to crm error types.
+   * @param {HttpErrorResponse} error - The HTTP error object.
+   * @returns {Observable<never>} An observable that emits an error of the appropriate 
+   * custom error type based on the HTTP status code that handel in `CrmErrorHandler`.
+   * @throws {BadInput} If the error status is 400 (Bad Request), an error of type BadInput is thrown.
+   * @throws {NotFound} If the error status is 404 (Not Found), an error of type NotFound is thrown.
+   * @throws {CrmError} For all other error statuses, an error of type CrmError is thrown.
+
+  */
+  private handleError(error: HttpErrorResponse) {
     if (error.status === 400)
-      return 'BadInput'
+      return throwError(() => new BadInput(error.error))
 
     if (error.status === 404)
-      return 'NotFoundError'
+      return throwError(() => new NotFound(error.error));
 
-    return 'UnExpacted Error';
+    return throwError(() => new CrmError(error.error));
   }
 }

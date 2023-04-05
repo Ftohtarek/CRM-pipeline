@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CrmError } from 'src/app/Error/crm.error';
 import { DealRequestsService } from 'src/app/service/deal-requests.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { DealRequestsService } from 'src/app/service/deal-requests.service';
 })
 export class DealComponent {
   constructor(private dealReq: DealRequestsService) {
-    dealReq.all.subscribe(value => console.log(value))
-    // dealReq.add()
+    dealReq.getAll.subscribe(value => console.log(value))
+    dealReq.update(2,{company:'f'})
   }
 }
