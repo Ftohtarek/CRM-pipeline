@@ -1,25 +1,22 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { HttpClientModule } from '@angular/common/http';
+import { CrmErrorHandler } from './Errors/crm-error-handler';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DealComponent } from './component/deal/deal.component';
-import { CrmErrorHandler } from './Error/crm-error-handler'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DealComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    DragDropModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-
     { provide: ErrorHandler, useClass: CrmErrorHandler }
   ],
   bootstrap: [AppComponent]

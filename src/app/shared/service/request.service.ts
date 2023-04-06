@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { BadInput } from '../Error/badinput.error';
-import { CrmError } from '../Error/crm.error';
-import { NotFound } from '../Error/notfound.error';
+import { BadInput } from '../../Errors/badinput.error';
+import { CrmError } from '../../Errors/crmErrors';
+import { NotFound } from '../../Errors/notfound.error';
 /** 
  * A generic service to handle HTTP requests.
 */

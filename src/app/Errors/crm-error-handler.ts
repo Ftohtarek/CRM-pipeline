@@ -1,11 +1,11 @@
 import { ErrorHandler } from "@angular/core";
-import { CrmError } from "./crm.error";
+import { CrmError } from "./crmErrors";
 import { NotFound } from "./notfound.error";
 import { BadInput } from "./badinput.error";
 
 export class CrmErrorHandler implements ErrorHandler {
     handleError(error: CrmError): void {
-        // console.log(error.originalError);
+        console.log(error.originalError);
 
         if (error instanceof NotFound)
             return alert('NotFoundError')
@@ -14,7 +14,7 @@ export class CrmErrorHandler implements ErrorHandler {
             return alert('badInput')
 
         if (error instanceof CrmError)
-            return alert('AppError')
+            return alert('un expacted error')
 
     }
 

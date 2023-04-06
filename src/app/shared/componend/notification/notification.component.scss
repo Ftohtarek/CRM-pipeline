@@ -1,0 +1,23 @@
+@import '../../../../styles.scss';
+
+div.host {
+    color: var(--bg-color);
+    position: absolute;
+    z-index: 99;
+    max-width: 140px;
+    font-size: 12px;
+    font-weight: 600;
+
+    div[content] {
+        background-color: var(--color-accent);
+        min-width: 35px;
+        min-height: 25px;
+    }
+
+    div[pointer] {
+        height: 10px;
+        color: var(--color-accent);
+        transform: rotate(180deg) translateY(-3px);
+        text-align: center;
+    }
+}

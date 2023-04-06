@@ -1,0 +1,89 @@
+@import '../../../../styles.scss';
+
+.host {
+    font-size: $cardFont;
+    padding: 5px;
+    width: 250px;
+    height:fit-content;
+
+    .header {
+        h6 {
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .wait {
+            margin-right: .5em;
+            font-size: 1.3em;
+            color: var(--color-primary);
+        }
+
+        button {
+            font-size: 1.3em;
+            @include app-btn();
+        }
+
+    }
+
+    .body {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .6em;
+
+        .chip-items {
+            width: 100%;
+            display: flex;
+            gap: .5em;
+
+            .chip {
+                @include app-btn();
+                color: var(--bg-color);
+                font-size: 1em;
+                font-weight: 600;
+                border-radius: 6px;
+                padding: 0 6px;
+                display: flex;
+                align-items: center;
+            }
+
+            .state {
+                background-color: var(--color-primary);
+            }
+
+            .probability_status {
+                background-color: var(--color-secondray);
+            }
+
+            .outDate {
+                background-color: var(--danger-color);
+                color: #ffffff;
+                padding: 0px;
+
+                i {
+                    line-height: 10px;
+                    font-size: 1.5em;
+                }
+            }
+        }
+
+        .contact {
+            width: 100%;
+            gap: .5em;
+            color: var(--color-primary);
+        }
+
+        .schedule {
+            color: var(--color-primary);
+            gap: .5em;
+            width: 100%;
+        }
+    }
+
+    .expire {
+        width: fit-content !important;
+        background-color: var(--alert-bg);
+        color: var(--danger-color) !important;
+        padding:1px 5px;
+        border-radius: 2px;
+    }
+}

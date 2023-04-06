@@ -1,3 +1,3 @@
-import { CrmError } from "./crm.error";
+import { CrmError } from "./crmErrors";
 
 export class BadInput extends CrmError { }

@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/styles/shared-styles.scss';
+@import './app/styles/layout.scss';
+@import './app/styles/animation.scss';
+$cardFont:14px;
+:root {
+    --color-primary: #aaaaaa;
+    --color-secondray: #176EFF;
+    --color-accent: #2f3c4d;
+    --bg-color: #fff;
+    --succuss-color: #0cdd17;
+    --warn-color: #d0dd1c;
+    --danger-color: #d12727d3;
+    --alert-color: #842029;
+    --alert-bg: #f8d7da85;
+}
+body{
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+}
+// .container {
+//     display: flex;
+//     flex-wrap: wrap;
+//     padding: 10px;
+//     border: 1px solid black;
+// }
+
+// .item {
+//     width: 150px;
+//     height: 150px;
+//     background-color: #f0f0f0;
+//     border: 1px solid black;
+//     margin: 10px;
+//     cursor: move;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .cdk-drag-preview {
+//     box-sizing: border-box;
+//     border-radius: 4px;
+//     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+//         0 8px 10px 1px rgba(0, 0, 0, .4)
+// }

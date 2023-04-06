@@ -1,0 +1,43 @@
+<div class="host shadow-sm">
+    <!-- card header -->
+    <div class="header d-flex justify-content-between align-item-center">
+        <h6>{{deal?.item?.company}}</h6>
+        <div>
+            <span class="wait"> <i class="bi bi-hourglass-split"></i></span>
+            <button class="menu-icon">
+                <i class="bi bi-three-dots"></i>
+            </button>
+        </div>
+    </div>
+    <!-- body -->
+    <div class="body py-1">
+        <!-- chip -->
+        <div class="chip-items d-flex">
+            <span #state class="chip state">{{deal?.item?.state}}</span>
+            <span #probability_status class="chip probability_status">{{deal?.item?.probability_status}}</span>
+            <span class="chip outDate" *ngIf="deal?.isExpire"><i class="bi bi-x"></i></span>
+        </div>
+        <!-- contact info -->
+        <div class="contact d-flex">
+            <span><i class="bi bi-telephone-fill"></i></span>
+            <span>{{deal?.item?.first_name| max:10}}{{' '}}{{ deal?.item?.last_name | max:10}}</span>
+            <span>{{deal?.item?.phone |phone}}</span>
+        </div>
+        <!-- date -->
+        <div class="schedule d-flex" [class.expire]="deal?.isExpire">
+            <span><i class="bi bi-calendar3"></i></span>
+            <span>{{deal?.item?.date|date:"dd.MM.yyyy"}}</span>
+            <span *ngIf="deal?.isExpire">( past due )</span>
+        </div>
+    </div>
+
+
+    <notification [NotificationTragerFor]="probability_status">
+        <p>probability_status :</p>
+        <p>{{deal?.item?.probability_status}}</p>
+    </notification>
+    <notification [NotificationTragerFor]="state">
+        <p>State</p>
+        <p>{{deal?.item?.state}}</p>
+    </notification>
+</div>
