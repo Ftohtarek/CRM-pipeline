@@ -1,5 +1,5 @@
 export interface IDeal {
-    readonly id: number
+     id: number
     first_name: string
     last_name: string
     email: string
@@ -10,6 +10,5 @@ export interface IDeal {
     probability_status: string
     state: string
 }
-export type DealWithoutID = Omit<IDeal, 'id'>
-export type DealProperty<T = { [K in keyof DealWithoutID]: Pick<IDeal, K> }> = T[keyof T]
+export type DealProperty<T = { [K in keyof  IDeal]: Pick<IDeal, K> }> =  T[keyof T]
 

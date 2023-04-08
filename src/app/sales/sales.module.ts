@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
-import { PipelineComponent } from './component/pipeline/pipeline.component';
+import { ActivitiesComponent } from './component/search-nav/search-nav.component';
+import { DealsComponent } from './component/deals/deals.component';
 import { SalesRoutingModule } from './sales-routing.module';
 @NgModule({
   declarations: [
-    PipelineComponent
+    DealsComponent,
+    ActivitiesComponent,
   ],
 
   imports: [

@@ -1,0 +1,31 @@
+.search-nav{
+    // background-color: red;
+    height:60px ;
+    font-size: 14px;
+    .add-btn{
+        background-color: var(-  -color-accent);
+        color: var(--bg-color);
+        font-size: 1em;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        min-width: 8em;
+        max-width: 13em;
+    }
+    .search{
+       font-size: 1em;
+       width: 100%;
+       input{
+        width: 100%;
+        box-shadow: none;
+           &::placeholder{
+                font-size: .8em;
+            }
+        }
+    }
+    .heading{
+        font-size: 1.3em;
+        font-weight: 500;
+    }
+}

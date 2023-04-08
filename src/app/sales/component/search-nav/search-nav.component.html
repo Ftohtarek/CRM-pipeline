@@ -1,0 +1,25 @@
+<div class="container-fluid ">
+    <div class="search-nav py-2 ">
+        <div class="row">
+            <div class="col-3">
+                <h2>
+                    Deals
+                </h2>
+            </div>
+            <div class="col-6">
+                <div class="search">
+                    <input type="search" class="form-control" formControlName="search" placeholder="search by firstname, lastname, email"
+                    (keyup)="emitSearchValue($event)"
+                    >
+                </div>
+            </div>
+            <div class="col-3">
+                <button class="add-btn ms-auto btn">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    <span>Add Deal</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

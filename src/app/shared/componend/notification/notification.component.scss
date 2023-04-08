@@ -1,13 +1,13 @@
 @import '../../../../styles.scss';
 
-div.host {
+abbr {
     color: var(--bg-color);
     position: absolute;
     z-index: 99;
+    left: 0;
     max-width: 140px;
     font-size: 12px;
     font-weight: 600;
-
     div[content] {
         background-color: var(--color-accent);
         min-width: 35px;
@@ -15,9 +15,13 @@ div.host {
     }
 
     div[pointer] {
-        height: 10px;
+        height: 5px;
         color: var(--color-accent);
-        transform: rotate(180deg) translateY(-3px);
+        transform: rotate(180deg) translateY(-5px);
         text-align: center;
+    }
+
+    &:hover {
+        display: block;
     }
 }

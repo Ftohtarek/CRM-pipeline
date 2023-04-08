@@ -1,5 +1,10 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, Host, Input, OnInit, Optional, SkipSelf, ViewChild } from '@angular/core';
 import { fade } from 'src/app/styles/animation-trigger';
+
+@Directive({
+  selector: '[notificateFor]'
+})
+export class notificateFor { }
 
 /**
  * The NotificationComponent displays a notification box
@@ -20,40 +25,39 @@ export class NotificationComponent implements OnInit {
   */
   @Input('NotificationTragerFor') triger!: HTMLElement
   /**
-   * The element that contains the notification box.
-   * @type {`ElementRef<HTMLDivElement>`}
-   */
-  @ViewChild('host') host!: ElementRef<HTMLDivElement>
-
-  /**
   * Indicates whether the notification box is currently open or not.
   * @type {boolean}
   */
   open: boolean = false
+  get notificateFor() { return <HTMLElement>document.querySelector('[notificateFor]') }
 
+  constructor(private el: ElementRef<HTMLDivElement>) { }
   ngOnInit(): void {
     // initializes mouse event listeners that handle hover behaviour.
+    this.triger.style.cursor = 'pointer'
     this.triger.addEventListener('mouseenter', this.onMouseEnter.bind(this));
     this.triger.addEventListener('mouseleave', this.onMouseLeave.bind(this));
   }
   /** Event Handler for mouseEnter to open notification */
-  private onMouseEnter() {
+  private onMouseEnter(event:any) {    
     this.open = true
+
     // this delay because the coordinate depond on notification it self coordinate. 
-    // so i need until it render.
-    setTimeout(() => this.setNotificationPosition(), 1);
+    // so i need 100 until it render.
+    setTimeout(() => { this.setNotificationPosition() }, 10);
   }
   /** Event Handler for mouseEnter to open notification */
   private onMouseLeave = () => this.open = false
 
   /** Sets the position of the notification box relative to the trigger element.*/
   setNotificationPosition() {
+    const host = <HTMLElement>this.el.nativeElement.firstElementChild
     // Calculate the vertical position of the notification box
-    let vertical = this.triger.offsetTop - this.host.nativeElement.clientHeight
+    let vertical = this.triger.offsetTop - host.clientHeight - (this.notificateFor?.scrollTop | 0)
     // Calculate the horizontal position of the notification box
-    let horizontal = this.triger.offsetLeft - this.host.nativeElement.clientWidth / 2 + this.triger.clientWidth / 2
+    let horizontal = this.triger.offsetLeft - host.clientWidth / 2 + this.triger.clientWidth / 2 - (this.notificateFor?.scrollLeft | 0)
 
-    this.host.nativeElement.style.top = `${vertical}px`
-    this.host.nativeElement.style.left = `${horizontal}px`
+    host.style.top = `${vertical}px`
+    host.style.left = `${horizontal}px`
   }
 }

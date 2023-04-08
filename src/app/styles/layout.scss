@@ -1,16 +1,17 @@
-@mixin freePosition($top: auto, $bottom: auto, $left: auto, $right: auto, $size: none) {
-    position: absolute;
+@mixin freePosition($position: absolute, $top: auto, $bottom: auto, $left: auto, $right: auto, $size: none) {
+    position: $position;
     top: $top;
     bottom: $bottom;
     right: $right;
     left: $left;
 
-    @if $size == contain {
+
+    @if $size ==contain {
         right: 0;
         left: 0;
     }
-    
-    @if $size == cover {
+
+    @if $size ==cover {
         z-index: 9;
         right: 0;
         left: 0;

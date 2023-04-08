@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PipelineComponent } from './component/pipeline/pipeline.component';
+import { DealsComponent } from './component/deals/deals.component';
 
 const routes: Routes = [
-  {path:'',component:PipelineComponent}
+  {path:'',component:DealsComponent}
 ];
 
 @NgModule({

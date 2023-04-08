@@ -1,0 +1,71 @@
+<searchNav (searchValue)="searchVal =$event"> </searchNav>
+
+<section class="container-fluid statge-container" [class.is-dragging]="isDragged" cdkDropListGroup notificateFor
+    slideOnDrag>
+    <!-- Stage -->
+    <div *ngFor="let statge of statges " cdkDropList class="statge p-1" [cdkDropListData]="dataList.items[statge]"
+        (cdkDropListDropped)="drop($event,statge)">
+        <!--Stage Heading  -->
+        <div class="heading p-2 ">
+            <h2>{{statge}}</h2>
+
+            <div class="summary my-1 d-flex align-item-center" #summary>
+                <div>
+                    <span class="material-symbols-outlined fill">
+                        assignment
+                    </span>
+                    <p>
+                        {{dataList.items[statge].length}}
+                    </p>
+                </div>
+
+                <div>
+                    <span class="material-symbols-outlined fill">
+                        notifications_active
+                    </span>
+                    {{dataList.totalAlarm(statge)}}
+                </div>
+                <notification [NotificationTragerFor]="summary">
+
+                    <p>{{statge}}
+                        {{dataList.items[statge].length}} Deal
+                    </p>
+                    <p>{{dataList.totalAlarm(statge)}} Notification</p>
+                </notification>
+            </div>
+        </div>
+
+        <!-- Draggable box -->
+        <div class="drag-box" *ngFor="let deal of dataList.items[statge] | search:searchVal " cdkDrag
+            (cdkDragStarted)="isDragged=true" (cdkDragEnded)="isDragged=false ;deleteBox=false"
+            (mousedown)="deleteBox=true" (mouseup)="deleteBox=false" >
+            <!-- black box that placeholder to card -->
+            <div class="placeholder" *cdkDragPlaceholder></div>
+            <!-- card -->
+            <card [deal]="deal.data"></card>
+
+            <!--customize dragable card preview -->
+            <ng-template cdkDragPreview matchSize >
+                <div>
+                    <div class="statge-drag-preview" [@rotate]>
+                        <card [deal]="deal.data"></card>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+
+    <!-- Delete box  -->
+    <div cdkDropList class="delete-statge p-1" (cdkDropListDropped)="drop($event,null)"
+        [style.display]="deleteBox?'block':'none'">
+        <div *cdkDragPlaceholder class="placeholder"> </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+            <p>Delete Card</p>
+        </div>
+    </div>
+
+</section>

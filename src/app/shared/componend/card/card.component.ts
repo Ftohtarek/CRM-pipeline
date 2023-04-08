@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DealModel } from 'src/app/sales/models/deal';
+import { DealModel } from 'src/app/sales/models/deal-model';
 
 @Component({
   selector: 'card',

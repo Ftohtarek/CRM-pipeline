@@ -30,12 +30,12 @@ export class RequestService {
       catchError(this.handleError))
   }
 
-  update(id: number, updatedRow: any): Observable<unknown> {
+  update(id: number, updatedRow: any): Observable<unknown> | void {
     return this.http.patch(this.endPointUrl + '/' + id, updatedRow).pipe(
       catchError(this.handleError))
   }
 
-  delete(id: number): Observable<unknown> {
+  delete(id: number): Observable<unknown> | void {
     return this.http.delete(this.endPointUrl + '/' + id).pipe(
       catchError(this.handleError))
   }

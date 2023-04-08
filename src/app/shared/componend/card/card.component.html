@@ -1,9 +1,10 @@
-<div class="host shadow-sm">
+<div class="host shadow-sm readyState" [class.readyState]="deal?.readyToProduction"
+    [class.done]="deal?.pro_status == 100 &&deal?.readyToProduction">
     <!-- card header -->
     <div class="header d-flex justify-content-between align-item-center">
         <h6>{{deal?.item?.company}}</h6>
         <div>
-            <span class="wait"> <i class="bi bi-hourglass-split"></i></span>
+            <span class="wait" *ngIf="deal?.isReady"> <i class="bi bi-hourglass-split"></i></span>
             <button class="menu-icon">
                 <i class="bi bi-three-dots"></i>
             </button>
@@ -13,9 +14,15 @@
     <div class="body py-1">
         <!-- chip -->
         <div class="chip-items d-flex">
-            <span #state class="chip state">{{deal?.item?.state}}</span>
-            <span #probability_status class="chip probability_status">{{deal?.item?.probability_status}}</span>
-            <span class="chip outDate" *ngIf="deal?.isExpire"><i class="bi bi-x"></i></span>
+            <div #state>
+                <span class="chip state">{{deal?.item?.state}}</span>
+            </div>
+            <div #probability_status>
+                <span class="chip probability_status">{{deal?.item?.probability_status}}</span>
+            </div>
+            <div>
+                <span class="chip outDate" *ngIf="deal?.isExpire"><i class="bi bi-x"></i></span>
+            </div>
         </div>
         <!-- contact info -->
         <div class="contact d-flex">
@@ -27,11 +34,13 @@
         <div class="schedule d-flex" [class.expire]="deal?.isExpire">
             <span><i class="bi bi-calendar3"></i></span>
             <span>{{deal?.item?.date|date:"dd.MM.yyyy"}}</span>
-            <span *ngIf="deal?.isExpire">( past due )</span>
+            <span *ngIf="deal?.isExpire" class="past-due">( past due )</span>
         </div>
     </div>
 
-
+    <div class="footer" *ngIf="deal?.readyToProduction">
+        <progress [value]="deal?.pro_status" max="100"></progress>
+    </div>
     <notification [NotificationTragerFor]="probability_status">
         <p>probability_status :</p>
         <p>{{deal?.item?.probability_status}}</p>
