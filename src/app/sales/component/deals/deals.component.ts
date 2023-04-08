@@ -1,8 +1,8 @@
-import { CdkDragDrop, moveItemInArray  ,transferArrayItem} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { AfterViewInit, Component } from '@angular/core';
 import { fade, rotate } from 'src/app/styles/animation-trigger';
 import { DealModel } from '../../models/deal-model';
-import { DataListItem, DealStatgeList, Stage } from '../../models/deal-statge-list';
+import { DealStatgeList, Stage } from '../../models/deal-statge-list';
 import { DealRequestsService } from '../../service/deal-requests.service';
 
 
@@ -15,23 +15,29 @@ import { DealRequestsService } from '../../service/deal-requests.service';
 })
 export class DealsComponent implements AfterViewInit {
   statges: Stage[] = ['Potential Value', 'Focus', 'Contact Made', 'Offer Sent', 'Getting Ready']
-  dataList: DealStatgeList = <DealStatgeList>{}
   deals: DealModel[] = <DealModel[]>[]
   isDragged: boolean = false
   deleteBox: boolean = false
 
   searchVal!: string
+
+  dataList: DealStatgeList = <DealStatgeList>{}
+  originalDataList: DealStatgeList = <DealStatgeList>{}
   constructor(private dealReqService: DealRequestsService) {
     dealReqService.data.subscribe(value => {
+      if (!this.originalDataList.items) {
+        this.originalDataList = new DealStatgeList(value, this.dataList)
+      }
       this.dataList = new DealStatgeList(value, this.dataList)
+      this.restoreOriginalOrder();
     })
 
   }
   ngAfterViewInit(): void { }
 
 
-  removeItemFromArray(currentArray: DataListItem[], currentIndex: number) {
-    const id = currentArray[currentIndex].data.item.id;
+  removeItemFromArray(currentArray: DealModel[], currentIndex: number) {
+    const id = currentArray[currentIndex].item.id;
     this.dealReqService.delete(id)
   }
 
@@ -43,22 +49,28 @@ export class DealsComponent implements AfterViewInit {
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      let statge: Stage = event.container.data[0].data.statge
-      this.dataList.items[statge].forEach((model,index) => {
-        model.position = index
-      })   
-
     } else {
-      // transferArrayItem(
-      //   event.previousContainer.data,
-      //   event.container.data,
-      //   event.previousIndex,
-      //   event.currentIndex,
-      // );
-      // move throw statges 
-      let itemId = event.previousContainer.data[event.previousIndex].data.item.id
+      let itemId = event.previousContainer.data[event.previousIndex].item.id
       this.dealReqService.update(itemId, { status: <Stage>statge })
+      // move throw statges 
+    }
+    this.originalDataList = this.dataList
+
+  }
+  private restoreOriginalOrder() {
+    if (this.originalDataList && this.dataList) {
+      // Loop through each array and restore the original order
+      for (const key in this.dataList.items) {
+        const currentOrder: any = this.dataList.items[<Stage>key];
+        const originalOrder: any = this.originalDataList.items[<Stage>key];
+
+        for (let i = 0; i < currentOrder.length; i++) {
+          const originalIndex = originalOrder.findIndex((item: any) => item.id === currentOrder[i].id);
+          if (originalIndex !== -1 && originalIndex !== i) {
+            moveItemInArray(currentOrder, i, originalIndex);
+          }
+        }
+      }
     }
   }
-
 }

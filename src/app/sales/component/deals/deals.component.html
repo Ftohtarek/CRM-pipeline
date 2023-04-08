@@ -38,17 +38,17 @@
         <!-- Draggable box -->
         <div class="drag-box" *ngFor="let deal of dataList.items[statge] | search:searchVal " cdkDrag
             (cdkDragStarted)="isDragged=true" (cdkDragEnded)="isDragged=false ;deleteBox=false"
-            (mousedown)="deleteBox=true" (mouseup)="deleteBox=false" >
+            (mousedown)="deleteBox=true" (mouseup)="deleteBox=false">
             <!-- black box that placeholder to card -->
             <div class="placeholder" *cdkDragPlaceholder></div>
             <!-- card -->
-            <card [deal]="deal.data"></card>
+            <card [deal]="deal"></card>
 
             <!--customize dragable card preview -->
-            <ng-template cdkDragPreview matchSize >
+            <ng-template cdkDragPreview matchSize>
                 <div>
                     <div class="statge-drag-preview" [@rotate]>
-                        <card [deal]="deal.data"></card>
+                        <card [deal]="deal"></card>
                     </div>
                 </div>
             </ng-template>
@@ -69,3 +69,4 @@
     </div>
 
 </section>
+
