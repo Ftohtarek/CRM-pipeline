@@ -38,7 +38,7 @@
         <!-- Draggable box -->
         <div class="drag-box" *ngFor="let deal of dataList.items[statge] | search:searchVal " cdkDrag
             (cdkDragStarted)="isDragged=true" (cdkDragEnded)="isDragged=false ;deleteBox=false"
-            (mousedown)="deleteBox=true" (mouseup)="deleteBox=false">
+            (mousedown)="deleteBox=true" (mouseup)="deleteBox=false" (touchstart)="deleteBox=true">
             <!-- black box that placeholder to card -->
             <div class="placeholder" *cdkDragPlaceholder></div>
             <!-- card -->
@@ -63,10 +63,9 @@
         <div class="d-flex justify-content-center align-items-center">
             <span class="material-symbols-outlined">
                 delete
-            </span>
-            <p>Delete Card</p>
+            </span >
+            <p >Delete Card</p>
         </div>
     </div>
 
 </section>
-
