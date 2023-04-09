@@ -48,3 +48,9 @@ body {
 .container-fluid {
     max-width: 1300px;
 }
+
+@media screen and (max-width:768px) {
+    :root{
+        --cardFont: 10px;
+    }
+}

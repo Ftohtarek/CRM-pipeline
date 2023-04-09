@@ -55,12 +55,20 @@
 }
 
 .delete-statge {
-    width: 15em;
+    width: 14em;
     height: 5em;
     background-color: var(--alert-bg);
     border: dashed 1px var(--alert-color);
     @include freePosition($position:fixed,$right: 5px, $bottom: 5px);
     z-index: 999;
+    opacity: 0;
+    animation: delay 500ms 250ms;
+    animation-fill-mode:forwards ;
+    @keyframes delay {
+        to {
+            opacity: 1;
+        }
+    }
 
     div {
         color: var(--danger-color);
@@ -111,4 +119,10 @@
 
 .is-dragging {
     cursor: grabbing !important;
+}
+
+@media screen and (max-width:768px) {
+    .statge{
+        min-width: 200px !important;
+    }
 }
