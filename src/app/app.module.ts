@@ -10,15 +10,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
   ],
+
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
   ],
+
   providers: [
     { provide: ErrorHandler, useClass: CrmErrorHandler }
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

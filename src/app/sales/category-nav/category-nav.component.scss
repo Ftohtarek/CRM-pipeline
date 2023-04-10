@@ -1,0 +1,30 @@
+@import '../../../styles.scss';
+
+nav {
+    font-size: 12px;
+    height: 4em;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-overlay);
+
+    .nav-items {
+        display: flex;
+
+        h3 {
+            @include app-btn($action: 'bright');
+            user-select: none;
+            font-size: 1.5em;
+            font-weight: 400;
+            background-color: transparent;
+
+            a {
+                width: inherit;
+                height: inherit;
+                padding: 4px 10px;
+                border-radius: 5px;
+                color: var(--color-primary);
+            }
+
+        }
+    }
+}

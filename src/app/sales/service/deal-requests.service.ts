@@ -1,10 +1,9 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { RequestService } from '../../shared/service/request.service';
 import { HttpClient } from '@angular/common/http';
-import { IDeal, DealProperty } from '../models/deal.interface';
-import { Observable, map } from 'rxjs'
+import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Observer, map } from 'rxjs';
+import { RequestService } from '../../shared/service/request.service';
 import { DealModel } from '../models/deal-model';
-import { DealStatgeList, Stage } from '../models/deal-statge-list';
+import { DealProperty, IDeal } from '../models/deal.interface';
 
 /**
  * Service for requesting deals data.
@@ -14,18 +13,22 @@ import { DealStatgeList, Stage } from '../models/deal-statge-list';
   providedIn: 'root'
 })
 export class DealRequestsService extends RequestService {
-  data: EventEmitter<DealModel[]> = new EventEmitter()
+
   private localData: DealModel[] = <DealModel[]>{};
+  subject: BehaviorSubject<any> = new BehaviorSubject<any>('')
+  get data() {
+    return this.subject.asObservable()
+  }
+
   constructor(http: HttpClient) {
     super(http)
     this.endPointUrl = "https://my-json-server.typicode.com/mabukoush1/contacts/db"
     this.getAll.subscribe(d => {
       this.localData = d;
       this.fakeData()
-      this.data.emit(d);
+      this.subject.next(d);
     })
   }
-
   /**
    * Overrides the getAll method of the parent RequestService class to return deals data as `IDeal[]`
    * @returns ` Observable<IDeal[]> ` - An observable of an array of IDeal objects.
@@ -43,14 +46,16 @@ export class DealRequestsService extends RequestService {
 
     this.localData[this.indexById(id)].item = { ...item, ...updatedRow }
 
-    this.data.emit(this.localData)
+    this.subject.next(this.localData)
+
   }
   override create(row: IDeal) {
     return super.create(row)
   }
   override delete(id: number) {
     this.localData.splice(this.indexById(id), 1)
-    this.data.emit(this.localData)
+
+    this.subject.next(this.localData)
   }
   private fakeData() {
     this.localData[1].item.probability_status = '100%'

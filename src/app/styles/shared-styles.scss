@@ -15,11 +15,12 @@
 
     @if $action ==bright {
         &:hover {
-            filter: brightness(80%);
+            filter: brightness(90%) ;
         }
 
         &:active {
-            filter: brightness(50%);
+            filter: brightness(70%);
+
         }
     }
 
@@ -27,4 +28,9 @@
         border-radius: 100%;
         padding: 7px;
     }
+}
+.activeSales {
+    background-color: var(--bg-color);
+    color: var(--color-accent) !important ;
+    box-shadow: 0 5px 4px rgba(0,0,0,.1);
 }

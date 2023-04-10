@@ -1,9 +1,8 @@
-<searchNav (searchValue)="searchVal =$event"> </searchNav>
-
 <section class="container-fluid statge-container" [class.is-dragging]="isDragged" cdkDropListGroup notificateFor
     slideOnDrag>
     <!-- Stage -->
-    <div *ngFor="let statge of statges " cdkDropList class="statge p-1" [cdkDropListData]="dataList.items[statge]"
+    <div *ngFor="let statge of statges" cdkDropList class="statge p-1"
+        [cdkDropListData]="dataList.items[statge]"
         (cdkDropListDropped)="drop($event,statge)">
         <!--Stage Heading  -->
         <div class="heading p-2 ">
@@ -36,9 +35,10 @@
         </div>
 
         <!-- Draggable box -->
-        <div class="drag-box" *ngFor="let deal of dataList.items[statge] | search:searchVal " cdkDrag
-            (cdkDragStarted)="isDragged=true" (cdkDragEnded)="isDragged=false ;deleteBox=false"
-            (mousedown)="deleteBox=true" (mouseup)="deleteBox=false" (touchstart)="deleteBox=true">
+        <div class="drag-box" (valueOfSearch)="searchVal= $event"
+            *ngFor="let deal of dataList.items[statge] | search:searchVal " cdkDrag (cdkDragStarted)="isDragged=true"
+            (cdkDragEnded)="isDragged=false ;deleteBox=false" (mousedown)="deleteBox=true" (mouseup)="deleteBox=false"
+            (touchstart)="deleteBox=true">
             <!-- black box that placeholder to card -->
             <div class="placeholder" *cdkDragPlaceholder></div>
             <!-- card -->
@@ -57,15 +57,14 @@
     </div>
 
     <!-- Delete box  -->
-    <div cdkDropList class="delete-statge p-1" (cdkDropListDropped)="drop($event,null)"
+    <div cdkDropList class="delete-statge p-1" (cdkDropListDropped)="drop($event,'delete')"
         [style.display]="deleteBox?'block':'none'">
         <div *cdkDragPlaceholder class="placeholder"> </div>
         <div class="d-flex justify-content-center align-items-center">
             <span class="material-symbols-outlined">
                 delete
-            </span >
-            <p >Delete Card</p>
+            </span>
+            <p>Delete Card</p>
         </div>
     </div>
-
 </section>

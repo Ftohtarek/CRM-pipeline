@@ -5,7 +5,7 @@ import { BadInput } from "./badinput.error";
 
 export class CrmErrorHandler implements ErrorHandler {
     handleError(error: CrmError): void {
-        console.log(error.originalError);
+        console.log(error);
 
         if (error instanceof NotFound)
             return alert('NotFoundError')

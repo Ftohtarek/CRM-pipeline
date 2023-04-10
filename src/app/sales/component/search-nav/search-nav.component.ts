@@ -1,15 +1,21 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Directive } from '@angular/core';
+let searchValue: EventEmitter<string> = new EventEmitter()
+
+@Directive({ selector: '[valueOfSearch]' })
+
+export class SearchValueDirective {
+  @Output('valueOfSearch') valueOfSearch: EventEmitter<string> = searchValue
+}
 
 @Component({
-  selector: 'searchNav',
+  selector: 'search-nav',
   templateUrl: './search-nav.component.html',
   styleUrls: ['./search-nav.component.scss'],
 
 })
-export class ActivitiesComponent {
-  @Output('searchValue') searchValue: EventEmitter<string> = new EventEmitter()
+
+export class SearchNavComponent {
   emitSearchValue(event: any) {
-    this.searchValue.emit(event.target.value)
+    searchValue.emit(event.target.value)
   }
 }

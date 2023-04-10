@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchNavComponent } from './search-nav.component';
+import { CategoryNavComponent } from './category-nav.component';
 
-describe('ActivitiesComponent', () => {
-  let component: SearchNavComponent;
-  let fixture: ComponentFixture<SearchNavComponent>;
+describe('CategoryNavComponent', () => {
+  let component: CategoryNavComponent;
+  let fixture: ComponentFixture<CategoryNavComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchNavComponent ]
+      declarations: [ CategoryNavComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SearchNavComponent);
+    fixture = TestBed.createComponent(CategoryNavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

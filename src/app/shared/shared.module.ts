@@ -4,10 +4,10 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CardComponent } from './componend/card/card.component';
 import { notificateFor, NotificationComponent } from './componend/notification/notification.component';
+import { SlideOnDragDirective } from './dirctive/slide-on-drag.directive';
 import { MaxPipe } from './pipe/max.pipe';
 import { PhonePipe } from './pipe/phone.pipe';
 import { SearchPipe } from './pipe/search.pipe';
-import { SlideOnDragDirective } from './dirctive/slide-on-drag.directive';
 @NgModule({
   declarations: [
     CardComponent,
@@ -16,7 +16,8 @@ import { SlideOnDragDirective } from './dirctive/slide-on-drag.directive';
     NotificationComponent,
     SearchPipe,
     notificateFor,
-    SlideOnDragDirective
+    SlideOnDragDirective,
+
   ],
   imports: [
     CommonModule,
@@ -32,7 +33,8 @@ import { SlideOnDragDirective } from './dirctive/slide-on-drag.directive';
     MatButtonModule,
     SearchPipe,
     notificateFor,
-    SlideOnDragDirective
+    SlideOnDragDirective,
+
   ]
 })
 export class SharedModule { }

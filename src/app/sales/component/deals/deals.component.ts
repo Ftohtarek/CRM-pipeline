@@ -1,9 +1,10 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { fade, rotate } from 'src/app/styles/animation-trigger';
 import { DealModel } from '../../models/deal-model';
 import { DealStatgeList, Stage } from '../../models/deal-statge-list';
 import { DealRequestsService } from '../../service/deal-requests.service';
+import { Subscription, firstValueFrom, lastValueFrom } from 'rxjs';
 
 
 
@@ -13,7 +14,7 @@ import { DealRequestsService } from '../../service/deal-requests.service';
   styleUrls: ['./deals.component.scss'],
   animations: [rotate, fade]
 })
-export class DealsComponent implements AfterViewInit {
+export class DealsComponent implements OnInit, OnDestroy {
   statges: Stage[] = ['Potential Value', 'Focus', 'Contact Made', 'Offer Sent', 'Getting Ready']
   deals: DealModel[] = <DealModel[]>[]
   isDragged: boolean = false
@@ -22,18 +23,18 @@ export class DealsComponent implements AfterViewInit {
   searchVal!: string
 
   dataList: DealStatgeList = <DealStatgeList>{}
+  subscription?: Subscription
   originalDataList: DealStatgeList = <DealStatgeList>{}
-  constructor(private dealReqService: DealRequestsService) {
-    dealReqService.data.subscribe(value => {
+  constructor(private dealReqService: DealRequestsService) { }
+  ngOnInit(): void {
+    this.subscription = this.dealReqService.data.subscribe(value => {      
       if (!this.originalDataList.items) {
         this.originalDataList = new DealStatgeList(value, this.dataList)
       }
       this.dataList = new DealStatgeList(value, this.dataList)
       this.restoreOriginalOrder();
     })
-
   }
-  ngAfterViewInit(): void { }
 
 
   removeItemFromArray(currentArray: DealModel[], currentIndex: number) {
@@ -42,15 +43,20 @@ export class DealsComponent implements AfterViewInit {
   }
 
 
-  drop(event: CdkDragDrop<any[]>, statge: Stage | null) {
+  drop(event: CdkDragDrop<any[]>, statge: Stage | 'delete') {
     let itemId = event.previousContainer.data[event.previousIndex].item.id
 
-    if (event.container.id == 'cdk-drop-list-0')
-      this.removeItemFromArray(event.previousContainer.data, event.previousIndex)
+    if (statge == 'delete'){
+      this.removeItemFromArray(event.previousContainer.data, event.previousIndex)    
+      console.log('remove');
+        
+    }
 
-    if (event.previousContainer === event.container) {
+    else if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      console.log('else');
+      
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -78,5 +84,8 @@ export class DealsComponent implements AfterViewInit {
         }
       }
     }
+  }
+  ngOnDestroy(): void {
+    (<Subscription>this.subscription).unsubscribe()
   }
 }
